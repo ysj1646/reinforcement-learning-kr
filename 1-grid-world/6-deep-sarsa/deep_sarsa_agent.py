@@ -50,7 +50,7 @@ class DeepSARSAgent:
             # 모델로부터 행동 산출
             state = np.float32(state)
             q_values = self.model.predict(state)
-            return np.argmax(q_values[0])
+            return np.argmax(q_values[0]) #[[],[],[],[],[]]같은 형태로 출력되기 때문에 [],[],[],[],[] 같은 형태로 바꾸기 위해 뒤에 [0]을 붙힘
 
     def train_model(self, state, action, reward, next_state, next_action, done):
         if self.epsilon > self.epsilon_min:
@@ -58,7 +58,9 @@ class DeepSARSAgent:
 
         state = np.float32(state)
         next_state = np.float32(next_state)
-        target = self.model.predict(state)[0]
+        target = self.model.predict(state)[0] #딥살사의 출력은 5개의 큐함수 값을 가진다. 하지만 모델을 업데이트하기 위해 오류함수를 계산할 출력은 이 가운데 실제로 행동한 하나의 큐함수 뿐
+        # 따라서 타깃에서 실제 행동에 해당하는 큐함수 외에는 예측 값에서 해당하는 큐함수 값과 동일해야함. 따라서 다음과 같이 예측(predict)를 target으로 놓고 실제 행동에 해당하는 부분을 뒤에서 계산하면
+        # 실제 행동에 대한 큐함수를 제외하고는 타깃과 예측의 차이가 0이됨. (?????)
         # 살사의 큐함수 업데이트 식
         if done:
             target[action] = reward
