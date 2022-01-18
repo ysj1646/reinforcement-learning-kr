@@ -45,11 +45,11 @@ class Env(tk.Tk):
 
     def load_images(self):
         rectangle = PhotoImage(
-            Image.open("../img/rectangle.png").resize((65, 65)))
+            Image.open("C:/Users/Student/git/reinforcement-learning-kr/1-grid-world/img/rectangle.png").resize((65, 65)))
         triangle = PhotoImage(
-            Image.open("../img/triangle.png").resize((65, 65)))
+            Image.open("C:/Users/Student/git/reinforcement-learning-kr/1-grid-world/img/triangle.png").resize((65, 65)))
         circle = PhotoImage(
-            Image.open("../img/circle.png").resize((65, 65)))
+            Image.open("C:/Users/Student/git/reinforcement-learning-kr/1-grid-world/img/circle.png").resize((65, 65)))
 
         return rectangle, triangle, circle
 
